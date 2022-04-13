@@ -27,8 +27,6 @@ fastify.register(fastifyCors, {
     }
     // Generate an error on other origins, disabling access
     cb(new Error('Not allowed'), false)
-
-    cb(null, true)
   },
 })
 
