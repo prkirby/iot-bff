@@ -1,4 +1,5 @@
 // Require the framework and instantiate it
+import 'dotenv/config'
 import Fastify from 'fastify'
 import fastifyCors from 'fastify-cors'
 import mqtt from 'mqtt'
@@ -8,17 +9,26 @@ import { lightsTopics } from '../iot-broker/schema'
 
 const fastify = Fastify({ logger: true })
 
-// Only allow localhost cors calls
+// Pass in allowable host names
+const CORSHosts = process.env.CORS_URLS?.split(',')
+
 fastify.register(fastifyCors, {
   origin: (origin, cb) => {
+    if (origin === undefined) {
+      cb(null, true)
+      return
+    }
+
     const hostname = new URL(origin).hostname
-    if (hostname === 'localhost') {
+    if (CORSHosts?.includes(hostname)) {
       //  Request from localhost will pass
       cb(null, true)
       return
     }
     // Generate an error on other origins, disabling access
     cb(new Error('Not allowed'), false)
+
+    cb(null, true)
   },
 })
 
