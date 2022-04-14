@@ -30,12 +30,14 @@ fastify.register(fastifyCors, {
   },
 })
 
-const client = mqtt.connect('mqtt://localhost:1883', {
+const host = process.env.HOST || 'mqtt://localhost:1883'
+
+const client = mqtt.connect(host, {
   clientId: 'pkirby-iot-bff',
 })
 
 client.on('connect', () => {
-  console.log('Client successfully connected')
+  console.log('Client successfully connected to ' + host)
 })
 
 client.on('message', function (topic, message) {
