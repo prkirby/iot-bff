@@ -61,10 +61,12 @@ fastify.post('/publish', async (request, reply) => {
 // Subscribe to lights topics
 client.subscribe(lightsTopics)
 
+const port = parseInt(process.env.PORT || '3001')
+
 // Run the server!
 const start = async () => {
   try {
-    await fastify.listen(3001)
+    await fastify.listen(port)
   } catch (err) {
     fastify.log.error(err)
     process.exit(1)
