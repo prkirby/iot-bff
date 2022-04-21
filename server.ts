@@ -10,23 +10,24 @@ import { lightsTopics } from '../iot-broker/schema'
 const fastify = Fastify({ logger: true })
 
 // Pass in allowable host names
-const CORSHosts = process.env.CORS_URLS?.split(',')
+// const CORSHosts = process.env.CORS_URLS?.split(',')
 
 fastify.register(fastifyCors, {
-  origin: (origin, cb) => {
-    if (origin === undefined) {
-      cb(null, true)
-      return
-    }
+  origin: (_origin, cb) => {
+    cb(null, true)
+    // if (origin === undefined) {
+    //   cb(null, true)
+    //   return
+    // }
 
-    const hostname = new URL(origin).hostname
-    if (CORSHosts?.includes(hostname)) {
-      //  Request from localhost will pass
-      cb(null, true)
-      return
-    }
-    // Generate an error on other origins, disabling access
-    cb(new Error('Not allowed'), false)
+    // const hostname = new URL(origin).hostname
+    // if (CORSHosts?.includes(hostname)) {
+    //   //  Request from localhost will pass
+    //   cb(null, true)
+    //   return
+    // }
+    // // Generate an error on other origins, disabling access
+    // cb(new Error('Not allowed'), false)
   },
 })
 
