@@ -1,7 +1,7 @@
 // Require the framework and instantiate it
 import 'dotenv/config'
 import Fastify from 'fastify'
-// import fastifyCors from 'fastify-cors'
+import fastifyCors from 'fastify-cors'
 import mqtt from 'mqtt'
 
 // Would eventually like to packagize this
@@ -14,24 +14,24 @@ const fastify = Fastify({
 // Pass in allowable host names
 // const CORSHosts = process.env.CORS_URLS?.split(',')
 
-// fastify.register(fastifyCors, {
-//   origin: (_origin, cb) => {
-//     cb(null, true)
-// if (origin === undefined) {
-//   cb(null, true)
-//   return
-// }
+fastify.register(fastifyCors, {
+  origin: (_origin, cb) => {
+    cb(null, true)
+    // if (origin === undefined) {
+    //   cb(null, true)
+    //   return
+    // }
 
-// const hostname = new URL(origin).hostname
-// if (CORSHosts?.includes(hostname)) {
-//   //  Request from localhost will pass
-//   cb(null, true)
-//   return
-// }
-// // Generate an error on other origins, disabling access
-// cb(new Error('Not allowed'), false)
-//   },
-// })
+    // const hostname = new URL(origin).hostname
+    // if (CORSHosts?.includes(hostname)) {
+    //   //  Request from localhost will pass
+    //   cb(null, true)
+    //   return
+    // }
+    // // Generate an error on other origins, disabling access
+    // cb(new Error('Not allowed'), false)
+  },
+})
 
 const host = process.env.HOST || 'mqtt://localhost:1883'
 
